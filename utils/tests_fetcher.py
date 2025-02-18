@@ -781,7 +781,7 @@ def create_reverse_dependency_tree() -> List[Tuple[str, str]]:
     """
     cache = {}
     all_modules = list(PATH_TO_TRANFORMERS.glob("**/*.py"))
-    all_modules = [x for x in all_modules if (not ("models" in x.parts and x.parts[-1].startswith("convert_")) or str(x) != "src/transformers/commands/convert.py")]
+    all_modules = [x for x in all_modules if (not ("models" in x.parts and x.parts[-1].startswith("convert_")) and str(x) != "src/transformers/commands/convert.py")]
     all_modules += list(PATH_TO_TESTS.glob("**/*.py"))
     all_modules = [str(mod.relative_to(PATH_TO_REPO)) for mod in all_modules]
     edges = [(dep, mod) for mod in all_modules for dep in get_module_dependencies(mod, cache=cache)]
@@ -901,7 +901,7 @@ def create_reverse_dependency_map() -> Dict[str, List[str]]:
     example_deps, examples = init_test_examples_dependencies()
     # Add all modules and all tests to all examples
     all_modules = list(PATH_TO_TRANFORMERS.glob("**/*.py"))
-    all_modules = [x for x in all_modules if (not ("models" in x.parts and x.parts[-1].startswith("convert_")) or str(x) != "src/transformers/commands/convert.py")]
+    all_modules = [x for x in all_modules if (not ("models" in x.parts and x.parts[-1].startswith("convert_")) and str(x) != "src/transformers/commands/convert.py")]
     all_modules += list(PATH_TO_TESTS.glob("**/*.py")) + examples
     all_modules = [str(mod.relative_to(PATH_TO_REPO)) for mod in all_modules]
     # Compute the direct dependencies of all modules.
